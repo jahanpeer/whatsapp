@@ -17,37 +17,20 @@
       }
 
       var youtubeVideoLongLink = 'www.youtube.com/watch?v=';
-      var youtubeChannelLink = 'youtu.be/';
       var youtubeShortLink = 'https://youtu.be/';
-      var https = 'https://';
-      var www = 'www.';
       var fallbackURL = getParameterByName('u');
       var channelFallback = getParameterByName('c');
       var shortsFallback = getParameterByName('s');
 
       if (channelFallback) {
-        if (channelFallback.includes(https)) {
-          if (channelFallback.includes(www))
-            fallbackURL = channelFallback.replace((https, ''));
-          else fallbackURL = channelFallback.replace(https, www);
-        } else if (!channelFallback.includes(www)) {
-          fallbackURL = youtubeChannelLink + channelFallback;
-        }
+        // Process YouTube channel URL
+        fallbackURL = 'www.youtube.com/channel/' + channelFallback;
       } else if (shortsFallback) {
         // Process YouTube Shorts URL
         fallbackURL = 'www.youtube.com/shorts/' + shortsFallback;
-      } else if (fallbackURL) {
-        if (fallbackURL.includes(youtubeShortLink)) {
-          fallbackURL = youtubeVideoLongLink + fallbackURL.split(youtubeShortLink)[1];
-        } else if (fallbackURL.includes(https)) {
-          if (fallbackURL.includes(www))
-            fallbackURL = fallbackURL.replace((https, ''));
-          else fallbackURL = fallbackURL.replace(https, www);
-        } else if (!fallbackURL.includes(www)) {
-          fallbackURL = youtubeVideoLongLink + fallbackURL;
-        }
-      } else {
-        return;
+      } else if (fallbackURL && fallbackURL.includes(youtubeShortLink)) {
+        // Process YouTube short link
+        fallbackURL = youtubeVideoLongLink + fallbackURL.split(youtubeShortLink)[1];
       }
 
       var androidApp = `intent://${fallbackURL}#Intent;package=com.google.android.youtube;scheme=https;end`;
@@ -55,16 +38,11 @@
 
       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         window.location.href = iosApp;
-        window.setTimeout(function () {
-          window.location.href = https + fallbackURL;
-        }, 25);
       } else if (/Android/i.test(navigator.userAgent)) {
         window.location.href = androidApp;
-        window.setTimeout(function () {
-          window.location.href = https + fallbackURL;
-        }, 25);
       } else {
-        window.location.href = https + fallbackURL;
+        // Fallback for non-mobile devices or unrecognized user agents
+        window.location.href = 'https://' + fallbackURL;
       }
 
       function killPopup() {
