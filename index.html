@@ -2,12 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title></title>
+  <title>WhatsApp Group Redirect</title>
 </head>
 <body>
+  <div id="whatsappGroupDiv">
+    <p>Click the button below to join the WhatsApp group.</p>
+    <button id="whatsappGroupButton">Join WhatsApp Group</button>
+  </div>
+
   <script type="text/javascript">
-    window.onload = function () {
-      // Function to get URL parameters
+    document.getElementById('whatsappGroupButton').onclick = function () {
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -17,34 +21,20 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
       }
 
-      // Function to check for a hypothetical parameter indicating a WhatsApp source
-      // For actual use, you may need a different or more complex check
-      function isComingFromWhatsApp() {
-        const source = getParameterByName('source');
-        return source === 'whatsapp';
-      }
-
-      // Handle the regular logic to manipulate the fallbackURL
       var whatsappGroupLink = 'chat.whatsapp.com/';
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
+        
+        if (!fallbackURL.startsWith('https://')) {
+          fallbackURL = 'https://' + fallbackURL;
+        }
 
         if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        // If the user is coming from WhatsApp (based on our check), do something special
-        // This is where you integrate your special handling for WhatsApp referrals
-        if (isComingFromWhatsApp()) {
-          console.log("Special handling for visitors from WhatsApp");
-          // Possibly redirect them to a special page or show a unique message
-          // For illustration, using window.alert, but replace as necessary
-          window.alert("Welcome, WhatsApp user!");
-        }
-
-        // Proceed to redirect the user as per the original logic
         window.location.href = fallbackURL;
       }
     };
