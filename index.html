@@ -17,11 +17,11 @@
       text-align: center;
     }
 
-    #whatsappLink {
+    #whatsappLink,
+    #showLinkButton {
       margin-bottom: 10px;
       text-decoration: none;
-      color: #3498db;
-      font-size: 18px;
+      font-size: 20px; /* Increased font size for the WhatsApp link */
       display: block;
     }
 
@@ -72,12 +72,10 @@
         whatsappLink.textContent = fallbackURL;
         whatsappLink.id = 'whatsappLink';
 
-        var showLinkButton = document.createElement('button');
-        showLinkButton.textContent = 'Show WhatsApp Group Link';
+        var showLinkButton = document.createElement('a');
+        showLinkButton.href = fallbackURL;
+        showLinkButton.textContent = 'Join WhatsApp Group';
         showLinkButton.id = 'showLinkButton';
-        showLinkButton.onclick = function() {
-          alert('WhatsApp Group Link: ' + fallbackURL);
-        };
 
         // Append the link and button to the container
         linkContainer.appendChild(whatsappLink);
