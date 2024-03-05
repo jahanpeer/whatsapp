@@ -21,7 +21,9 @@
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
-        if (!fallbackURL.startsWith('http://') && !fallbackURL.startsWith('https://')) {
+        
+        // Check if the protocol is specified, if not, add 'https://'
+        if (!/^https?:\/\//i.test(fallbackURL)) {
           fallbackURL = 'https://' + fallbackURL;
         }
 
