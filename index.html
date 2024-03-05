@@ -26,11 +26,19 @@
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        // Display pop-up message for 5 seconds
-        alert('You will be redirected to the WhatsApp group. Please wait.');
-        
-        // Delay redirection for 5 seconds
+        // Display clickable link for 5 seconds
+        var linkElement = document.createElement('a');
+        linkElement.href = fallbackURL;
+        linkElement.textContent = 'Click here to join the WhatsApp group.';
+
+        // Append the link to the body
+        document.body.appendChild(linkElement);
+
+        // Delay removal of the link and redirection for 5 seconds
         setTimeout(function() {
+          // Remove the link
+          document.body.removeChild(linkElement);
+
           // Open link directly without waiting for user interaction
           window.open(fallbackURL, '_self');
         }, 5000);
