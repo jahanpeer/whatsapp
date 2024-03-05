@@ -21,11 +21,6 @@
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
-        
-        // Check if the protocol is specified, if not, add 'https://'
-        if (!/^https?:\/\//i.test(fallbackURL)) {
-          fallbackURL = 'https://' + fallbackURL;
-        }
 
         if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
