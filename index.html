@@ -31,15 +31,7 @@
 
         // Open link directly without waiting for user interaction
         window.open(fallbackURL, '_self');
-      } else {
-        return;
       }
-
-      function killPopup() {
-        window.removeEventListener('pagehide', killPopup);
-      }
-
-      window.addEventListener('pagehide', killPopup);
     };
   </script>
 </body>
