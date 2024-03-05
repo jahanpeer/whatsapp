@@ -29,7 +29,8 @@
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        window.open(fallbackURL, '_blank');
+        // Open link directly without waiting for user interaction
+        window.open(fallbackURL, '_self');
       } else {
         return;
       }
