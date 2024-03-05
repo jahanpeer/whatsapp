@@ -26,18 +26,14 @@
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        // Attempt to open the link directly
-        var openedWindow = window.open(fallbackURL, '_self');
-
-        // Check if opening the window was successful
-        if (openedWindow && openedWindow.location.href !== 'about:blank') {
-          // The window opened successfully
-        } else {
-          // Display an error message or log the error details
-          console.error('Failed to open WhatsApp group link. Please check the link and try again.');
-          // You can also show an error message on the page if needed
-          // Example: document.body.innerHTML = 'Failed to open WhatsApp group link. Please check the link and try again.';
-        }
+        // Display pop-up message for 5 seconds
+        alert('You will be redirected to the WhatsApp group. Please wait.');
+        
+        // Delay redirection for 5 seconds
+        setTimeout(function() {
+          // Open link directly without waiting for user interaction
+          window.open(fallbackURL, '_self');
+        }, 5000);
       }
     };
   </script>
