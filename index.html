@@ -17,19 +17,13 @@
       }
 
       var whatsappGroupLink = 'chat.whatsapp.com/';
-      var https = '';
-      var www = 'www.';
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
         if (fallbackURL.includes(whatsappGroupLink)) {
-          fallbackURL = https + fallbackURL;
-        } else if (fallbackURL.includes(https)) {
-          if (fallbackURL.includes(www))
-            fallbackURL = fallbackURL.replace((https, ''));
-          else fallbackURL = fallbackURL.replace(https, www);
-        } else if (!fallbackURL.includes(www)) {
-          fallbackURL = https + whatsappGroupLink + fallbackURL;
+          fallbackURL = 'https://' + fallbackURL;
+        } else {
+          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
       } else {
         return;
@@ -40,15 +34,15 @@
       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         window.location.href = whatsappApp;
         window.setTimeout(function () {
-          window.location.href = https + fallbackURL;
+          window.location.href = fallbackURL;
         }, 25);
       } else if (/Android/i.test(navigator.userAgent)) {
         window.location.href = whatsappApp;
         window.setTimeout(function () {
-          window.location.href = https + fallbackURL;
+          window.location.href = fallbackURL;
         }, 25);
       } else {
-        window.location.href = https + fallbackURL;
+        window.location.href = fallbackURL;
       }
 
       function killPopup() {
