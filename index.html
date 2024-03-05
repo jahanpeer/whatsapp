@@ -28,24 +28,10 @@
         if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
+
+        window.location.href = fallbackURL;
       } else {
         return;
-      }
-
-      var whatsappApp = `whatsapp://send?text=${encodeURIComponent(fallbackURL)}`;
-
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.location.href = whatsappApp;
-        window.setTimeout(function () {
-          window.location.href = fallbackURL;
-        }, 25);
-      } else if (/Android/i.test(navigator.userAgent)) {
-        window.location.href = whatsappApp;
-        window.setTimeout(function () {
-          window.location.href = fallbackURL;
-        }, 25);
-      } else {
-        window.location.href = fallbackURL;
       }
 
       function killPopup() {
