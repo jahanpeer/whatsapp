@@ -3,42 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <title></title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    #linkContainer {
-      text-align: center;
-    }
-
-    #whatsappLink,
-    #showLinkButton {
-      margin-bottom: 10px;
-      text-decoration: none;
-      font-size: 20px; /* Increased font size for the WhatsApp link */
-      display: block;
-    }
-
-    #showLinkButton {
-      padding: 15px 20px;
-      font-size: 16px;
-      background-color: #2ecc71;
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #showLinkButton:hover {
-      background-color: #27ae60;
-    }
-  </style>
 </head>
 <body>
   <script type="text/javascript">
@@ -58,40 +22,13 @@
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
 
+        // Ensure it is a complete WhatsApp group link; add prefix if missing
         if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        // Create a container div for centering the content
-        var linkContainer = document.createElement('div');
-        linkContainer.id = 'linkContainer';
-
-        // Display clickable link with the actual URL and styled button for 5 seconds
-        var whatsappLink = document.createElement('a');
-        whatsappLink.href = fallbackURL;
-        whatsappLink.textContent = fallbackURL;
-        whatsappLink.id = 'whatsappLink';
-
-        var showLinkButton = document.createElement('a');
-        showLinkButton.href = fallbackURL;
-        showLinkButton.textContent = 'Join WhatsApp Group';
-        showLinkButton.id = 'showLinkButton';
-
-        // Append the link and button to the container
-        linkContainer.appendChild(whatsappLink);
-        linkContainer.appendChild(showLinkButton);
-
-        // Append the container to the body
-        document.body.appendChild(linkContainer);
-
-        // Delay removal of the container and redirection for 5 seconds
-        setTimeout(function() {
-          // Remove the container
-          document.body.removeChild(linkContainer);
-
-          // Open link directly without waiting for user interaction
-          window.open(fallbackURL, '_self');
-        }, 5000);
+        // Modify the way to open the WhatsApp link directly. This ensures we try to open it in the app if possible.
+        window.location.href = fallbackURL; // Note: This attempts to open the WhatsApp link, possibly redirecting to the app or WhatsApp web.
       }
     };
   </script>
