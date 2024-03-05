@@ -7,6 +7,7 @@
 <body>
   <script type="text/javascript">
     window.onload = function () {
+      // Function to get URL parameters
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -16,19 +17,35 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
       }
 
+      // Function to check for a hypothetical parameter indicating a WhatsApp source
+      // For actual use, you may need a different or more complex check
+      function isComingFromWhatsApp() {
+        const source = getParameterByName('source');
+        return source === 'whatsapp';
+      }
+
+      // Handle the regular logic to manipulate the fallbackURL
       var whatsappGroupLink = 'chat.whatsapp.com/';
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
 
-        // Ensure it is a complete WhatsApp group link; add prefix if missing
         if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        // Modify the way to open the WhatsApp link directly. This ensures we try to open it in the app if possible.
-        window.location.href = fallbackURL; // Note: This attempts to open the WhatsApp link, possibly redirecting to the app or WhatsApp web.
+        // If the user is coming from WhatsApp (based on our check), do something special
+        // This is where you integrate your special handling for WhatsApp referrals
+        if (isComingFromWhatsApp()) {
+          console.log("Special handling for visitors from WhatsApp");
+          // Possibly redirect them to a special page or show a unique message
+          // For illustration, using window.alert, but replace as necessary
+          window.alert("Welcome, WhatsApp user!");
+        }
+
+        // Proceed to redirect the user as per the original logic
+        window.location.href = fallbackURL;
       }
     };
   </script>
