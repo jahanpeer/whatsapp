@@ -3,6 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <title></title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #linkContainer {
+      text-align: center;
+    }
+
+    #whatsappLink {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <script type="text/javascript">
@@ -26,18 +43,33 @@
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        // Display clickable link for 5 seconds
-        var linkElement = document.createElement('a');
-        linkElement.href = fallbackURL;
-        linkElement.textContent = 'Click here to join the WhatsApp group.';
+        // Create a container div for centering the content
+        var linkContainer = document.createElement('div');
+        linkContainer.id = 'linkContainer';
 
-        // Append the link to the body
-        document.body.appendChild(linkElement);
+        // Display clickable link and button for 5 seconds
+        var whatsappLink = document.createElement('a');
+        whatsappLink.href = fallbackURL;
+        whatsappLink.textContent = 'Click here to join the WhatsApp group.';
+        whatsappLink.id = 'whatsappLink';
 
-        // Delay removal of the link and redirection for 5 seconds
+        var showLinkButton = document.createElement('button');
+        showLinkButton.textContent = 'Show WhatsApp Group Link';
+        showLinkButton.onclick = function() {
+          alert('WhatsApp Group Link: ' + fallbackURL);
+        };
+
+        // Append the link and button to the container
+        linkContainer.appendChild(whatsappLink);
+        linkContainer.appendChild(showLinkButton);
+
+        // Append the container to the body
+        document.body.appendChild(linkContainer);
+
+        // Delay removal of the container and redirection for 5 seconds
         setTimeout(function() {
-          // Remove the link
-          document.body.removeChild(linkElement);
+          // Remove the container
+          document.body.removeChild(linkContainer);
 
           // Open link directly without waiting for user interaction
           window.open(fallbackURL, '_self');
