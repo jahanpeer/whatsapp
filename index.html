@@ -20,9 +20,12 @@
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
-        if (fallbackURL.includes(whatsappGroupLink)) {
+        fallbackURL = fallbackURL.trim();
+        if (!fallbackURL.startsWith('http://') && !fallbackURL.startsWith('https://')) {
           fallbackURL = 'https://' + fallbackURL;
-        } else {
+        }
+
+        if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
       } else {
