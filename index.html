@@ -16,50 +16,34 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
       }
 
-      var youtubeVideoLongLink = 'www.youtube.com/watch?v=';
-      var youtubeChannelLink = 'youtu.be/';
-      var youtubeShortLink = 'https://youtu.be/';
+      var whatsappGroupLink = 'chat.whatsapp.com/';
       var https = 'https://';
       var www = 'www.';
       var fallbackURL = getParameterByName('u');
-      var channelFallback = getParameterByName('c');
-      var shortsFallback = getParameterByName('s');
 
-      if (channelFallback) {
-        if (channelFallback.includes(https)) {
-          if (channelFallback.includes(www))
-            fallbackURL = channelFallback.replace((https, ''));
-          else fallbackURL = channelFallback.replace(https, www);
-        } else if (!channelFallback.includes(www)) {
-          fallbackURL = youtubeChannelLink + channelFallback;
-        }
-      } else if (shortsFallback) {
-        // Process YouTube Shorts URL
-        fallbackURL = 'www.youtube.com/shorts/' + shortsFallback;
-      } else if (fallbackURL) {
-        if (fallbackURL.includes(youtubeShortLink)) {
-          fallbackURL = youtubeVideoLongLink + fallbackURL.split(youtubeShortLink)[1];
+      if (fallbackURL) {
+        if (fallbackURL.includes(whatsappGroupLink)) {
+          fallbackURL = https + fallbackURL;
         } else if (fallbackURL.includes(https)) {
           if (fallbackURL.includes(www))
             fallbackURL = fallbackURL.replace((https, ''));
           else fallbackURL = fallbackURL.replace(https, www);
         } else if (!fallbackURL.includes(www)) {
-          fallbackURL = youtubeVideoLongLink + fallbackURL;
+          fallbackURL = https + whatsappGroupLink + fallbackURL;
         }
       } else {
         return;
       }
 
-      var androidApp = `intent://${fallbackURL}#Intent;package=com.google.android.youtube;scheme=https;end`;
-      var iosApp = `vnd.youtube://${fallbackURL}`;
+      var whatsappApp = `whatsapp://send?text=${encodeURIComponent(fallbackURL)}`;
 
       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.location.href = iosApp;
+        window.location.href = whatsappApp;
         window.setTimeout(function () {
           window.location.href = https + fallbackURL;
         }, 25);
       } else if (/Android/i.test(navigator.userAgent)) {
-        window.location.href = androidApp;
+        window.location.href = whatsappApp;
         window.setTimeout(function () {
           window.location.href = https + fallbackURL;
         }, 25);
