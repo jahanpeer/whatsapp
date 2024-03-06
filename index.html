@@ -44,38 +44,34 @@
   <div id="whatsappGroupDiv">
     <p>Click the button below to join the WhatsApp group.</p>
     <button id="whatsappGroupButton">Join WhatsApp Group</button>
-    <p>If its Show "Failed to get group info" its whatsapp error so please click agiain .</p>
-    <p>"Failed to get group info" இவ்வாறு காட்டினால் வாட்ஸ் அப்பில் கோளாறு ஆகவே குரூப்பில் இணைய மீண்டும் கிளிக் செய்யவும்.</p>
+    <p>If its Show "Failed to get group info" its whatsapp error so please click again.</p>
+    <p>"Failed to get group info" இவ்வாறு காட்டினால் வாட்ஸ் அப்பில் கோளாறு ஆகவே குரூப்பில் இணைய மீண்டும் கிளிக் செய்யவும்.</p>
   </div>
 
   <script type="text/javascript">
-   document.getElementById('whatsappGroupButton').onclick = function () {
-  function getParameterByName(name, url = window.location.href) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
+    document.getElementById('whatsappGroupButton').onclick = function () {
+      function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
 
-  var whatsappGroupLink = 'chat.whatsapp.com/';
-  var fallbackURL = getParameterByName('u');
+      var whatsappGroupLink = 'chat.whatsapp.com/';
+      var fallbackURL = getParameterByName('u');
 
-  if (fallbackURL) {
-    fallbackURL = fallbackURL.trim();
+      if (fallbackURL) {
+        fallbackURL = fallbackURL.trim();
+        
+        if (!fallbackURL.includes(whatsappGroupLink)) {
+          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
+        }
 
-    if (!/^https?:\/\//i.test(fallbackURL)) {
-      fallbackURL = 'https://' + fallbackURL;
-    }
-
-    if (!fallbackURL.includes(whatsappGroupLink)) {
-      fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
-    }
-
-    window.location.href = fallbackURL;
-  }
-};
+        window.location.href = fallbackURL;
+      }
+    };
   </script>
 </body>
 </html>
