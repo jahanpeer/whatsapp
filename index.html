@@ -49,33 +49,33 @@
   </div>
 
   <script type="text/javascript">
-    document.getElementById('whatsappGroupButton').onclick = function () {
-      function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-          results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-      }
+   document.getElementById('whatsappGroupButton').onclick = function () {
+  function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
 
-      var whatsappGroupLink = 'chat.whatsapp.com/';
-      var fallbackURL = getParameterByName('u');
+  var whatsappGroupLink = 'chat.whatsapp.com/';
+  var fallbackURL = getParameterByName('u');
 
-      if (fallbackURL) {
-        fallbackURL = fallbackURL.trim();
-        
-        if (!fallbackURL.startsWith('https://')) {
-          fallbackURL = 'https://' + fallbackURL;
-        }
+  if (fallbackURL) {
+    fallbackURL = fallbackURL.trim();
 
-        if (!fallbackURL.includes(whatsappGroupLink)) {
-          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
-        }
+    if (!/^https?:\/\//i.test(fallbackURL)) {
+      fallbackURL = 'https://' + fallbackURL;
+    }
 
-        window.location.href = fallbackURL;
-      }
-    };
+    if (!fallbackURL.includes(whatsappGroupLink)) {
+      fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
+    }
+
+    window.location.href = fallbackURL;
+  }
+};
   </script>
 </body>
 </html>
