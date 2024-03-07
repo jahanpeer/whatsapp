@@ -2,54 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>WhatsApp Group Redirect</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    #whatsappGroupDiv {
-      text-align: center;
-      padding: 20px;
-      background-color: #f2f2f2;
-      border-radius: 10px;
-      width: 70%;
-    }
-    
-    #whatsappGroupDiv p {
-      font-size: 35px; /* Increased font size */
-      color: #333;
-    }
-    
-    #whatsappGroupButton {
-      font-size: 45px;
-      padding: 30px 40px;
-      background-color: #25D366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    #whatsappGroupButton:hover {
-      background-color: #128C7E;
-    }
-  </style>
+  <title></title>
 </head>
 <body>
-  <div id="whatsappGroupDiv">
-    <p>Click the button below to join the WhatsApp group.</p>
-    <button id="whatsappGroupButton">Join WhatsApp Group</button>
-    <p>If its Show "Failed to get group info" please click again.</p>
-    <p>"Failed to get group info" இவ்வாறு காட்டினால் குரூப்பில் இணைய மீண்டும் கிளிக் செய்யவும்.</p>
-  </div>
-
   <script type="text/javascript">
-    document.getElementById('whatsappGroupButton').onclick = function () {
+    window.onload = function () {
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -64,12 +21,13 @@
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
-        
+
         if (!fallbackURL.includes(whatsappGroupLink)) {
           fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
 
-        window.location.href = fallbackURL;
+        // Open link directly without waiting for user interaction
+        window.open(fallbackURL, '_self');
       }
     };
   </script>
