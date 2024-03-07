@@ -21,14 +21,13 @@
       }
 
       var whatsappGroupLink = 'chat.whatsapp.com/';
-      var fblink = '?fbclid=PAAabCxHHv7jHe_QEhBKxvhAZSB6Mf7myZ7wg6tomHp3oEEDrX3eKAKgBK-Tw';
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
 
         if (!fallbackURL.includes(whatsappGroupLink)) {
-          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL + fblink;
+          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL ;
         }
 
         // Open link directly without waiting for user interaction
