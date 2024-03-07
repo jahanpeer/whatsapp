@@ -7,10 +7,6 @@
 <body>
   <script type="text/javascript">
     window.onload = function () {
-      // Your custom code here.
-      // Example: Console log a message instead of redirecting.
-      console.log("Redirection bypassed.");
-
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -21,18 +17,26 @@
       }
 
       var whatsappGroupLink = 'chat.whatsapp.com/';
+      var excludeString = 'excludeString'; // The string you want to exclude
       var fblink = '?fbclid=PAAabCxHHv7jHe_QEhBKxvhAZSB6Mf7myZ7wg6tomHp3oEEDrX3eKAKgBK-Tw';
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
 
-        if (!fallbackURL.includes(whatsappGroupLink)) {
-          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL + fblink;
-        }
+        // Check if the fallbackURL does NOT contain the excludeString
+        if (!fallbackURL.includes(excludeString)) {
+            
+            if (!fallbackURL.includes(whatsappGroupLink)) {
+              fallbackURL = 'https://' + whatsappGroupLink + fallbackURL + fblink;
+            }
 
-        // Open link directly without waiting for user interaction
-        window.open(fallbackURL, '_self');
+            // Open link directly without waiting for user interaction
+            window.open(fallbackURL, '_self');
+        } else {
+            // Log a message or handle the case where the excludeString is found in the URL.
+            console.log("Excluded string found in URL, not redirecting.");
+        }
       }
     };
   </script>
