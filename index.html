@@ -7,6 +7,8 @@
 <body>
   <script type="text/javascript">
     window.onload = function () {
+      console.log("Attempting to open WhatsApp.");
+
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -17,37 +19,26 @@
       }
 
       var whatsappGroupLink = 'chat.whatsapp.com/';
-      var excludeString = 'excludeString'; // The string you want to exclude
+      var whatsappScheme = 'whatsapp://'; // Deep link scheme for WhatsApp
       var fallbackURL = getParameterByName('u');
 
       if (fallbackURL) {
         fallbackURL = fallbackURL.trim();
 
-        // Check if the fallbackURL does NOT contain the excludeString
-        if (!fallbackURL.includes(excludeString)) {
-            
-            if (!fallbackURL.includes(whatsappGroupLink)) {
-              fallbackURL = 'https://' + whatsappGroupLink + fallbackURL ;
-            }
-
-            // Attempt to open the link in WhatsApp/WhatsApp Business first
-            var whatsappURL = 'whatsapp://send?text=' + encodeURIComponent('Join my WhatsApp group: ' + fallbackURL);
-            var whatsappBusinessURL = 'whatsapp://send?text=' + encodeURIComponent('Join my WhatsApp group: ' + fallbackURL);
-            
-            // Create an iframe to try to open the WhatsApp/WhatsApp Business app
-            var iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = whatsappURL; // Change to whatsappBusinessURL for WhatsApp Business
-            document.body.appendChild(iframe);
-              
-            // Use a timeout to fallback to opening the link in a browser if the app doesn't open
-            setTimeout(function() {
-              window.open(fallbackURL, '_self');
-            }, 25);
-        } else {
-            // Log a message or handle the case where the excludeString is found in the URL.
-            console.log("Excluded string found in URL, not redirecting.");
+        if (!fallbackURL.includes(whatsappGroupLink)) {
+          fallbackURL = whatsappGroupLink + fallbackURL;
         }
+
+        var deepLinkUrl = whatsappScheme + fallbackURL;
+        var hrefLink = 'https://' + fallbackURL;
+
+        // Attempt to open in WhatsApp
+        window.location.href = deepLinkUrl;
+
+        // Fallback: Attempt after a short delay to give the deep link a chance
+        setTimeout(function() {
+          window.location.href = hrefLink;
+        }, 2500); // Adjust delay as needed
       }
     };
   </script>
