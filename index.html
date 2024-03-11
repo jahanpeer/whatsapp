@@ -7,8 +7,6 @@
 <body>
   <script type="text/javascript">
     window.onload = function () {
-      console.log("Attempting to open WhatsApp.");
-
       function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\[\]]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -19,27 +17,39 @@
       }
 
       var whatsappGroupLink = 'chat.whatsapp.com/';
-      var whatsappScheme = 'whatsapp://'; // Deep link scheme for WhatsApp
       var fallbackURL = getParameterByName('u');
-
+      
       if (fallbackURL) {
-        fallbackURL = fallbackURL.trim();
-
-        if (!fallbackURL.includes(whatsappGroupLink)) {
-          fallbackURL = whatsappGroupLink + fallbackURL;
+        if (fallbackURL.includes(whatsappGroupLink)) {
+          // Process WhatsApp group link
+          fallbackURL = fallbackURL; // No "https://" prefix added
+        } else {
+          // Handle other types of links or fallback to a default behavior
+          fallbackURL = 'example.com'; // Change this to your default URL without "https://"
         }
-
-        var deepLinkUrl = whatsappScheme + fallbackURL;
-        var hrefLink = 'https://' + fallbackURL;
-
-        // Attempt to open in WhatsApp
-        window.location.href = deepLinkUrl;
-
-        // Fallback: Attempt after a short delay to give the deep link a chance
-        setTimeout(function() {
-          window.location.href = hrefLink;
-        }, 2500); // Adjust delay as needed
+      } else {
+        // Handle the case when there is no URL parameter
+        return;
       }
+
+      // Redirect logic for different devices
+      var iosApp = 'whatsapp://send?text=' + encodeURIComponent('Join our WhatsApp group: ' + fallbackURL);
+      var androidApp = 'intent://send?text=' + encodeURIComponent('Join our WhatsApp group: ' + fallbackURL) + '#Intent;package=com.whatsapp;scheme=whatsapp;end';
+
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.location.href = iosApp;
+      } else if (/Android/i.test(navigator.userAgent)) {
+        window.location.href = androidApp;
+      } else {
+        // Fallback for other devices
+        window.location.href = fallbackURL;
+      }
+
+      function killPopup() {
+        window.removeEventListener('pagehide', killPopup);
+      }
+
+      window.addEventListener('pagehide', killPopup);
     };
   </script>
 </body>
