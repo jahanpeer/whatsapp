@@ -18,38 +18,17 @@
 
       var whatsappGroupLink = 'chat.whatsapp.com/';
       var fallbackURL = getParameterByName('u');
-      
+
       if (fallbackURL) {
-        if (fallbackURL.includes(whatsappGroupLink)) {
-          // Process WhatsApp group link
-          fallbackURL = fallbackURL; // No "https://" prefix added
-        } else {
-          // Handle other types of links without any fallback
-          return;
+        fallbackURL = fallbackURL.trim();
+
+        if (!fallbackURL.includes(whatsappGroupLink)) {
+          fallbackURL = 'https://' + whatsappGroupLink + fallbackURL;
         }
-      } else {
-        // Handle the case when there is no URL parameter
-        return;
+
+        // Open link directly without waiting for user interaction
+        window.open(fallbackURL, '_self');
       }
-
-      // Redirect logic for different devices
-      var iosApp = 'whatsapp://send?text=' + encodeURIComponent('Join our WhatsApp group: ' + fallbackURL);
-      var androidApp = 'intent://send?text=' + encodeURIComponent('Join our WhatsApp group: ' + fallbackURL) + '#Intent;package=com.whatsapp;scheme=whatsapp;end';
-
-      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.location.href = iosApp;
-      } else if (/Android/i.test(navigator.userAgent)) {
-        window.location.href = androidApp;
-      } else {
-        // Fallback for other devices
-        window.location.href = fallbackURL;
-      }
-
-      function killPopup() {
-        window.removeEventListener('pagehide', killPopup);
-      }
-
-      window.addEventListener('pagehide', killPopup);
     };
   </script>
 </body>
