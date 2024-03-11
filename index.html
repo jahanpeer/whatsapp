@@ -24,8 +24,8 @@
           // Process WhatsApp group link
           fallbackURL = fallbackURL; // No "https://" prefix added
         } else {
-          // Handle other types of links or fallback to a default behavior
-          fallbackURL = 'example.com'; // Change this to your default URL without "https://"
+          // Handle other types of links without any fallback
+          return;
         }
       } else {
         // Handle the case when there is no URL parameter
